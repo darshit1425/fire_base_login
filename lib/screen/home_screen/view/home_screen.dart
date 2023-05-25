@@ -1,5 +1,6 @@
 import 'package:fire_base_login/utils/fire_base_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({Key? key}) : super(key: key);
@@ -22,18 +23,31 @@ class _Home_ScreenState extends State<Home_Screen> {
           ),
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  FirebaseHelper.firebaseHelper.Singup(
-                      email: "hello123@gmail.com", password: "password");
-                },
-                child: Text("save"),
-              ),
+        // body: Column(
+        //   children: [
+        //     Center(
+        //       child: ElevatedButton(
+        //         onPressed: () {
+        //           FirebaseHelper.firebaseHelper.Singup(
+        //               email: "hello123@gmail.com", password: "password");
+        //         },
+        //         child: Text("save"),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        body: Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+            onPressed: () {
+              FirebaseHelper.firebaseHelper.signOut();
+              Get.back();
+            },
+            child: Text(
+              "Logout",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-          ],
+          ),
         ),
       ),
     );
