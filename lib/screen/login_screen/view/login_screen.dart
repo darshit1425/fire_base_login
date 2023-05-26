@@ -44,10 +44,11 @@ class _Login_ScreenState extends State<Login_Screen> {
                       width: width + 20,
                       child: Container(
                         decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/background-2.png'),
-                                fit: BoxFit.fill)),
+                          image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/background-2.png'),
+                              fit: BoxFit.fill),
+                        ),
                       ),
                     ),
                   ],
@@ -158,9 +159,10 @@ class _Login_ScreenState extends State<Login_Screen> {
                   child: Text(
                     "Don't Have  An Account? Sign Up",
                     style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromRGBO(49, 39, 79, .6)),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(49, 39, 79, .6),
+                    ),
                   ),
                 ),
               ),

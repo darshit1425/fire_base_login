@@ -11,9 +11,7 @@ class _Splash_screenState extends State<Splash_screen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-
-      ),
+      child: Scaffold(),
     );
   }
 }

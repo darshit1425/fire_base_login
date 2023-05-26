@@ -1,7 +1,6 @@
 import 'package:fire_base_login/utils/fire_base_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 
 class SingUp_Screen extends StatefulWidget {
   const SingUp_Screen({Key? key}) : super(key: key);
@@ -133,7 +132,7 @@ class _SingUp_ScreenState extends State<SingUp_Screen> {
                   }
                   Get.snackbar(
                     "$msg",
-                    "message ok ",
+                    "Failed ",
                   );
 
                   // Get.back();
@@ -153,6 +152,49 @@ class _SingUp_ScreenState extends State<SingUp_Screen> {
                           fontSize: 16,
                           fontWeight: FontWeight.w500),
                     ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                onTap: () async {
+                  var msg = await FirebaseHelper.firebaseHelper.signInWithGoogle();
+
+                  if (msg == "Success")
+                  {
+                    Get.offAndToNamed("/Home");
+
+                  }
+                  // Get.snackbar(
+                  //   "$msg",
+                  //   "not ok",
+                  // );
+                },
+                child: Container(
+                  height: 50,
+                  margin: EdgeInsets.symmetric(horizontal: 60),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Color.fromRGBO(49, 39, 79, 1),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        child: Image.asset(
+                            "assets/images/google-removebg-preview.png"),
+                      ),
+                      Center(
+                        child: Text(
+                          "Sign in with Google ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

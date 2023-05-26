@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fire_base_login/utils/fire_base_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,8 +12,18 @@ class Home_Screen extends StatefulWidget {
 }
 
 class _Home_ScreenState extends State<Home_Screen> {
+
+  bool isLogin = false;
+
   @override
+  void initState() {
+    super.initState();
+
+    isLogin = FirebaseHelper.firebaseHelper.CheckUser();
+  }
+
   Widget build(BuildContext context) {
+    Timer(Duration(seconds: 5), () => Get.offAndToNamed("/"),);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
