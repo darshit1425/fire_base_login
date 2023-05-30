@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -77,4 +78,34 @@ class FirebaseHelper {
 //
 // await firebaseAuth
 //     .signInWithCredential(crede)
+
+//    DATA BASE -> UID TODO  -> DATA
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<void> AddData(
+      {p_name,
+      p_notes,
+      p_date,
+      p_time,
+      p_price,
+      p_review,
+      p_warranty,
+      p_paytypes,
+      p_modelno}) async {
+    User? user = firebaseAuth.currentUser;
+    String uid = user!.uid;
+
+    await firestore.collection("E commerce").doc("$uid").collection("app").add({
+      "p_name": p_name,
+      "p_notes": p_notes,
+      "p_date": p_date,
+      "p_time": p_time,
+      "p_price": p_price,
+      "p_review": p_review,
+      "p_warranty": p_warranty,
+      "p_paytypes": p_paytypes,
+      "p_modelno": p_modelno,
+    });
+  }
 }
