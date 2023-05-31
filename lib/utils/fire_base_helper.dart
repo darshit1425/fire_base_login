@@ -16,7 +16,7 @@ class FirebaseHelper {
     await firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) => msg = "Success")
-        .catchError((e) => msg = "Faild $e");
+          .catchError((e) => msg = "Faild $e");
     return msg;
   }
 
@@ -113,8 +113,6 @@ class FirebaseHelper {
     User? user = firebaseAuth.currentUser;
     var uid = user!.uid;
 
-    return firestore
-        .collection("Product")
-        .snapshots();
+    return firestore.collection("Product").snapshots();
   }
 }

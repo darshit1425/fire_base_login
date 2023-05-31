@@ -88,15 +88,67 @@ class _Home_ScreenState extends State<Home_Screen> {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   print(homeList.length);
-                  return Column(
-                    children: [
-                      Text("${homeList[index].p_name}"),
-                      Text("${homeList[index].p_review}"),
-                      Text("${homeList[index].p_modelno}"),
-                      Text("${homeList[index].p_price}"),
-                      Text("${homeList[index].p_notes}"),
-                      Text("${homeList[index].p_paytypes}"),
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border:
+                            Border.all(color: Colors.grey.shade800, width: 8),
+                        color: Colors.black,
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            "Name :-${homeList[index].p_name}",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Price :-${homeList[index].p_price}",
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Transiction :-${homeList[index].p_paytypes}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            "Notes :-${homeList[index].p_notes}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            "Review :-${homeList[index].p_review}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            "ModelNo :-${homeList[index].p_modelno}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            "Date :-${homeList[index].p_date}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            "Time :-${homeList[index].p_time}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 },
                 itemCount: homeList.length,
