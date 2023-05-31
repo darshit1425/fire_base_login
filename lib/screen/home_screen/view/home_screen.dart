@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fire_base_login/screen/home_screen/model/home_model.dart';
 import 'package:fire_base_login/utils/fire_base_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,16 +23,6 @@ class _Home_ScreenState extends State<Home_Screen> {
     isLogin = FirebaseHelper.firebaseHelper.CheckUser();
   }
 
-  TextEditingController txtp_name = TextEditingController();
-  TextEditingController txtp_notes = TextEditingController();
-  TextEditingController txtp_date = TextEditingController();
-  TextEditingController txtp_time = TextEditingController();
-  TextEditingController txtp_price = TextEditingController();
-  TextEditingController txtp_review = TextEditingController();
-  TextEditingController txtp_warranty = TextEditingController();
-  TextEditingController txtp_paytypes = TextEditingController();
-  TextEditingController txtp_modelno = TextEditingController();
-
   Widget build(BuildContext context) {
     // Timer(
     //   Duration(seconds: 5),
@@ -48,106 +40,76 @@ class _Home_ScreenState extends State<Home_Screen> {
           centerTitle: true,
           actions: [
             IconButton(
-                onPressed: () async {
-                  await FirebaseHelper.firebaseHelper.signOut();
-                },
-                icon: Icon(Icons.logout_outlined))
+              onPressed: () async {
+                await FirebaseHelper.firebaseHelper.signOut();
+              },
+              icon: Icon(
+                Icons.logout_outlined,
+              ),
+            ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(children: [
-              TextField(
-                controller: txtp_name,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "p_name"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: txtp_notes,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "p_notes"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: txtp_date,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "date"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: txtp_time,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "time"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: txtp_price,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "price"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: txtp_review,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "Review"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: txtp_warranty,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "warranty"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: txtp_paytypes,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "paytypes"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: txtp_modelno,
-                decoration:
-                    InputDecoration(focusColor: Colors.blue, hintText: "modelno"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  FirebaseHelper.firebaseHelper.AddData(
-                    p_price: txtp_price.text,
-                    p_name: txtp_name.text,
-                    p_date: txtp_date.text,
-                    p_modelno: txtp_modelno.text,
-                    p_notes: txtp_notes.text,
-                    p_paytypes: txtp_paytypes.text,
-                    p_review: txtp_review.text,
-                    p_time: txtp_time.text,
-                    p_warranty: txtp_warranty.text,
+        body: StreamBuilder(
+          stream: FirebaseHelper.firebaseHelper.GetData(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            } else if (snapshot.hasData) {
+              List<Home_model> homeList = [];
+              QuerySnapshot? snapData = snapshot.data;
+
+              for (var x in snapData!.docs) {
+                Map data = x.data() as Map;
+                String? name = data['p_name'];
+                String? notes = data['p_notes'];
+                String? date = data['p_date'];
+                String? time = data['p_time'];
+                String? price = data['p_price'];
+                String? review = data['p_review'];
+                String? warranty = data['p_warranty'];
+                String? paytypes = data['p_paytypes'];
+                String? model = data['p_modelno'];
+
+                print(name);
+
+                Home_model home_model = Home_model(
+                    p_name: name,
+                    p_warranty: warranty,
+                    p_review: review,
+                    p_paytypes: paytypes,
+                    p_notes: notes,
+                    p_modelno: model,
+                    p_date: date,
+                    p_price: price,
+                    p_time: time);
+
+                homeList.add(home_model);
+              }
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  print(homeList.length);
+                  return Column(
+                    children: [
+                      Text("${homeList[index].p_name}"),
+                      Text("${homeList[index].p_review}"),
+                      Text("${homeList[index].p_modelno}"),
+                      Text("${homeList[index].p_price}"),
+                      Text("${homeList[index].p_notes}"),
+                      Text("${homeList[index].p_paytypes}"),
+                    ],
                   );
                 },
-                child: Text("Save"),
-              ),
-            ]),
-          ),
+                itemCount: homeList.length,
+              );
+            }
+            return CircularProgressIndicator();
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Get.toNamed('/add');
+          },
         ),
       ),
     );

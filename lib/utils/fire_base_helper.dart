@@ -96,7 +96,7 @@ class FirebaseHelper {
     User? user = firebaseAuth.currentUser;
     String uid = user!.uid;
 
-    await firestore.collection("E commerce").doc("$uid").collection("app").add({
+    await firestore.collection("Product").add({
       "p_name": p_name,
       "p_notes": p_notes,
       "p_date": p_date,
@@ -107,5 +107,14 @@ class FirebaseHelper {
       "p_paytypes": p_paytypes,
       "p_modelno": p_modelno,
     });
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> GetData() {
+    User? user = firebaseAuth.currentUser;
+    var uid = user!.uid;
+
+    return firestore
+        .collection("Product")
+        .snapshots();
   }
 }

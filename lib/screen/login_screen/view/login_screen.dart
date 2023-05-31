@@ -131,7 +131,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                     Get.offAndToNamed("/Home");
                   }
 
-                  Get.toNamed("/Home");
+                  // Get.toNamed("/Home");
                 },
                 child: Container(
                   height: 50,

@@ -1,3 +1,4 @@
+import 'package:fire_base_login/screen/home_screen/view/add_product.dart';
 import 'package:fire_base_login/screen/home_screen/view/home_screen.dart';
 import 'package:fire_base_login/screen/login_screen/view/login_screen.dart';
 import 'package:fire_base_login/screen/singup_screen/view/singup_screen.dart';
@@ -25,6 +26,10 @@ void main() async {
         GetPage(
           name: '/Home',
           page: () => Home_Screen(),
+        ),
+        GetPage(
+          name: '/add',
+          page: () => Add_product(),
         ),
       ],
     ),
