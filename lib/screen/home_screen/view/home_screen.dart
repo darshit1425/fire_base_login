@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fire_base_login/screen/home_screen/controller/home_controller.dart';
 import 'package:fire_base_login/screen/home_screen/model/home_model.dart';
 import 'package:fire_base_login/utils/fire_base_helper.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class Home_Screen extends StatefulWidget {
 
 class _Home_ScreenState extends State<Home_Screen> {
   bool isLogin = false;
+  Home_Controller contoller = Get.put(Home_Controller());
 
   @override
   void initState() {
@@ -49,6 +51,38 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
           ],
         ),
+        // drawer: Drawer(
+        //   child: Padding(
+        //     padding: EdgeInsets.all(10),
+        //     child: Column(
+        //       children: [
+        //         CircleAvatar(
+        //           radius: 30,
+        //           backgroundImage:
+        //               NetworkImage("${contoller.userDetail['image']}"),
+        //         ),
+        //         SizedBox(height: 10),
+        //         Text(
+        //           "${contoller.userDetail['name']}",
+        //           style: TextStyle(
+        //             fontWeight: FontWeight.bold,
+        //             fontSize: 16,
+        //             color: Colors.black,
+        //           ),
+        //         ),
+        //         SizedBox(height: 10),
+        //         Text(
+        //           "${contoller.userDetail['email']}",
+        //           style: TextStyle(
+        //             fontWeight: FontWeight.bold,
+        //             fontSize: 12,
+        //             color: Colors.black,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         body: StreamBuilder(
           stream: FirebaseHelper.firebaseHelper.GetData(),
           builder: (context, snapshot) {
@@ -81,72 +115,85 @@ class _Home_ScreenState extends State<Home_Screen> {
                     p_modelno: model,
                     p_date: date,
                     p_price: price,
-                    p_time: time);
+                    p_time: time,
+                    key: x.id);
 
                 homeList.add(home_model);
               }
-              return ListView.builder(
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisExtent: 230,
+                ),
                 itemBuilder: (context, index) {
-                  print(homeList.length);
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border:
-                            Border.all(color: Colors.grey.shade800, width: 8),
-                        color: Colors.black,
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            "Name :-${homeList[index].p_name}",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Price :-${homeList[index].p_price}",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Transiction :-${homeList[index].p_paytypes}",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            "Notes :-${homeList[index].p_notes}",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            "Review :-${homeList[index].p_review}",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            "ModelNo :-${homeList[index].p_modelno}",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            "Date :-${homeList[index].p_date}",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            "Time :-${homeList[index].p_time}",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                        ],
+                    child: GestureDetector(
+                      onLongPress: () {
+                        // FirebaseHelper.firebaseHelper
+                        // .UpadteData(Home_model[index].key);
+                        Get.toNamed("/add", arguments: 1);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(17),
+                          border:
+                              Border.all(color: Colors.grey.shade800, width: 5),
+                          color: Colors.black,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Text(
+                              "Name :-${homeList[index].p_name}",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Price :-${homeList[index].p_price}",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Transiction :-${homeList[index].p_paytypes}",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              "Notes :-${homeList[index].p_notes}",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              "Review :-${homeList[index].p_review}",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              "ModelNo :-${homeList[index].p_modelno}",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              "Date :-${homeList[index].p_date}",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              "Time :-${homeList[index].p_time}",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -160,7 +207,7 @@ class _Home_ScreenState extends State<Home_Screen> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            Get.toNamed('/add');
+            Get.toNamed('/add',arguments: 0);
           },
         ),
       ),

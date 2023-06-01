@@ -16,7 +16,7 @@ class FirebaseHelper {
     await firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) => msg = "Success")
-          .catchError((e) => msg = "Faild $e");
+        .catchError((e) => msg = "Faild $e");
     return msg;
   }
 
@@ -81,6 +81,24 @@ class FirebaseHelper {
 
 //    DATA BASE -> UID TODO  -> DATA
 
+
+
+  Map UserData() {
+    User? user = firebaseAuth.currentUser;
+
+    String? image = user!.photoURL;
+    String? name = user.displayName;
+    String? email = user.email;
+    String? phone = user.phoneNumber;
+
+    return {
+      "image": image,
+      "name": name,
+      "email": email,
+      "phone": phone,
+    };
+  }
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> AddData(
@@ -95,8 +113,7 @@ class FirebaseHelper {
       p_modelno}) async {
     User? user = firebaseAuth.currentUser;
     String uid = user!.uid;
-
-    await firestore.collection("Product").add({
+    await firestore.collection("Product").doc("$uid").collection("todo").add({
       "p_name": p_name,
       "p_notes": p_notes,
       "p_date": p_date,
@@ -113,6 +130,35 @@ class FirebaseHelper {
     User? user = firebaseAuth.currentUser;
     var uid = user!.uid;
 
-    return firestore.collection("Product").snapshots();
+    return firestore
+        .collection("Product")
+        .doc("$uid")
+        .collection("todo")
+        .snapshots();
+  }
+
+  void UpadteData(String key) {
+    User? user = firebaseAuth.currentUser;
+    var uid = user!.uid;
+    firestore
+        .collection("Product")
+        .doc("$uid")
+        .collection("todo")
+        .doc(key)
+        .set({
+
+
+
+      "p_name": "p_name",
+      "p_notes": "p_notes",
+      "p_date": "p_date",
+      "p_time": "p_time",
+      "p_price": "p_price",
+      "p_review": "p_review",
+      "p_warranty": "p_warranty",
+      "p_paytypes": "p_paytypes",
+      "p_modelno": 'p_modelno',
+
+    });
   }
 }

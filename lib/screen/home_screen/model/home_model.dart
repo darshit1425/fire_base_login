@@ -7,7 +7,8 @@ class Home_model {
       p_review,
       p_warranty,
       p_paytypes,
-      p_modelno;
+      p_modelno,
+  key;
 
   Home_model(
       {this.p_name,
@@ -18,5 +19,6 @@ class Home_model {
       this.p_review,
       this.p_warranty,
       this.p_paytypes,
+        this.key,
       this.p_modelno});
 }
