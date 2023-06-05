@@ -81,8 +81,6 @@ class FirebaseHelper {
 
 //    DATA BASE -> UID TODO  -> DATA
 
-
-
   Map UserData() {
     User? user = firebaseAuth.currentUser;
 
@@ -137,7 +135,18 @@ class FirebaseHelper {
         .snapshots();
   }
 
-  void UpadteData(String key) {
+  void UpadteData({
+    required p_name,
+    required p_notes,
+    required p_date,
+    required p_time,
+    required p_price,
+    required p_review,
+    required p_warranty,
+    required p_paytypes,
+    required p_modelno,
+    required key,
+  }) {
     User? user = firebaseAuth.currentUser;
     var uid = user!.uid;
     firestore
@@ -146,19 +155,28 @@ class FirebaseHelper {
         .collection("todo")
         .doc(key)
         .set({
-
-
-
-      "p_name": "p_name",
-      "p_notes": "p_notes",
-      "p_date": "p_date",
-      "p_time": "p_time",
-      "p_price": "p_price",
-      "p_review": "p_review",
-      "p_warranty": "p_warranty",
-      "p_paytypes": "p_paytypes",
-      "p_modelno": 'p_modelno',
-
+      "p_name": p_name,
+      "p_notes": p_notes,
+      "p_date": p_date,
+      "p_time": p_time,
+      "p_price": p_price,
+      "p_review": p_review,
+      "p_warranty": p_warranty,
+      "p_paytypes": p_paytypes,
+      "p_modelno": p_modelno,
     });
+  }
+
+  Future<void> deletedata(String key) async {
+    User? user = firebaseAuth.currentUser;
+    var uid = user!.uid;
+
+
+    await   firestore
+        .collection("Product")
+        .doc("$uid")
+        .collection("todo")
+        .doc(key).delete();
+
   }
 }

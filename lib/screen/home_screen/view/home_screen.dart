@@ -89,6 +89,7 @@ class _Home_ScreenState extends State<Home_Screen> {
             if (snapshot.hasError) {
               return Text("${snapshot.error}");
             } else if (snapshot.hasData) {
+              contoller.DataList.clear();
               List<Home_model> homeList = [];
               QuerySnapshot? snapData = snapshot.data;
 
@@ -107,18 +108,19 @@ class _Home_ScreenState extends State<Home_Screen> {
                 print(name);
 
                 Home_model home_model = Home_model(
-                    p_name: name,
-                    p_warranty: warranty,
-                    p_review: review,
-                    p_paytypes: paytypes,
-                    p_notes: notes,
-                    p_modelno: model,
-                    p_date: date,
-                    p_price: price,
-                    p_time: time,
-                    key: x.id);
+                  p_name: name,
+                  p_warranty: warranty,
+                  p_review: review,
+                  p_paytypes: paytypes,
+                  p_notes: notes,
+                  p_modelno: model,
+                  p_date: date,
+                  p_price: price,
+                  p_time: time,
+                  key: x.id,
+                );
 
-                homeList.add(home_model);
+                contoller.DataList.add(home_model);
               }
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -133,7 +135,27 @@ class _Home_ScreenState extends State<Home_Screen> {
                       onLongPress: () {
                         // FirebaseHelper.firebaseHelper
                         // .UpadteData(Home_model[index].key);
-                        Get.toNamed("/add", arguments: 1);
+
+                        Home_model home_model = Home_model(
+                          key: contoller.DataList[index].key,
+                          p_time: contoller.DataList[index].p_time,
+                          p_price: contoller.DataList[index].p_price,
+                          p_date: contoller.DataList[index].p_date,
+                          p_modelno: contoller.DataList[index].p_modelno,
+                          p_notes: contoller.DataList[index].p_notes,
+                          p_paytypes: contoller.DataList[index].p_paytypes,
+                          p_review: contoller.DataList[index].p_review,
+                          p_warranty: contoller.DataList[index].p_warranty,
+                          p_name: contoller.DataList[index].p_name,
+                          checkupdate: 1,
+                        );
+
+                        Get.toNamed("/add", arguments: home_model);
+                      },
+                      onDoubleTap: () {
+                        var key = contoller.DataList[index].key;
+                        FirebaseHelper.firebaseHelper.deletedata(key!);
+                        Get.snackbar("Delete", "success");
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -148,7 +170,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                               height: 12,
                             ),
                             Text(
-                              "Name :-${homeList[index].p_name}",
+                              "Name :-${contoller.DataList[index].p_name}",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -158,7 +180,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                               height: 5,
                             ),
                             Text(
-                              "Price :-${homeList[index].p_price}",
+                              "Price :-${contoller.DataList[index].p_price}",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             ),
@@ -166,27 +188,27 @@ class _Home_ScreenState extends State<Home_Screen> {
                               height: 5,
                             ),
                             Text(
-                              "Transiction :-${homeList[index].p_paytypes}",
+                              "Transiction :-${contoller.DataList[index].p_paytypes}",
                               style: TextStyle(color: Colors.white),
                             ),
                             Text(
-                              "Notes :-${homeList[index].p_notes}",
+                              "Notes :-${contoller.DataList[index].p_notes}",
                               style: TextStyle(color: Colors.white),
                             ),
                             Text(
-                              "Review :-${homeList[index].p_review}",
+                              "Review :-${contoller.DataList[index].p_review}",
                               style: TextStyle(color: Colors.white),
                             ),
                             Text(
-                              "ModelNo :-${homeList[index].p_modelno}",
+                              "ModelNo :-${contoller.DataList[index].p_modelno}",
                               style: TextStyle(color: Colors.white),
                             ),
                             Text(
-                              "Date :-${homeList[index].p_date}",
+                              "Date :-${contoller.DataList[index].p_date}",
                               style: TextStyle(color: Colors.white),
                             ),
                             Text(
-                              "Time :-${homeList[index].p_time}",
+                              "Time :-${contoller.DataList[index].p_time}",
                               style: TextStyle(color: Colors.white),
                             ),
                             SizedBox(
@@ -198,7 +220,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                     ),
                   );
                 },
-                itemCount: homeList.length,
+                itemCount: contoller.DataList.length,
               );
             }
             return CircularProgressIndicator();
@@ -207,7 +229,10 @@ class _Home_ScreenState extends State<Home_Screen> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            Get.toNamed('/add',arguments: 0);
+            Home_model home_model = Home_model(
+              checkupdate: 0,
+            );
+            Get.toNamed("/add", arguments: home_model);
           },
         ),
       ),

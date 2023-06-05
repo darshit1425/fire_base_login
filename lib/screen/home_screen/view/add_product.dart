@@ -1,4 +1,5 @@
 import 'package:fire_base_login/screen/home_screen/controller/home_controller.dart';
+import 'package:fire_base_login/screen/home_screen/model/home_model.dart';
 import 'package:fire_base_login/utils/fire_base_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,27 +26,57 @@ class _Add_productState extends State<Add_product> {
   TextEditingController txtp_paytypes = TextEditingController();
   TextEditingController txtp_modelno = TextEditingController();
 
-  int args = 0;
+  Home_model home_model = Get.arguments;
 
   @override
   void initState() {
     super.initState();
-    args = Get.arguments;
 
-    if (args == 1) {
-      txtp_modelno =
-          TextEditingController(text: contoller.updateData.p_modelno);
-      txtp_name = TextEditingController(text: contoller.updateData.p_name);
-      txtp_notes = TextEditingController(text: contoller.updateData.p_notes);
-      txtp_date = TextEditingController(text: contoller.updateData.p_date);
-      txtp_time = TextEditingController(text: contoller.updateData.p_time);
-      txtp_price = TextEditingController(text: contoller.updateData.p_price);
-      txtp_review = TextEditingController(text: contoller.updateData.p_review);
-      txtp_warranty =
-          TextEditingController(text: contoller.updateData.p_warranty);
-      txtp_paytypes =
-          TextEditingController(text: contoller.updateData.p_paytypes);
-    }
+    home_model.checkupdate == 1 ? NewData() : OldData();
+  }
+
+  void NewData() {
+    txtp_name = TextEditingController(
+      text: "${home_model.p_name}",
+    );
+    txtp_modelno = TextEditingController(
+      text: "${home_model.p_modelno}",
+    );
+
+    txtp_review = TextEditingController(
+      text: "${home_model.p_review}",
+    );
+    txtp_price = TextEditingController(
+      text: "${home_model.p_price}",
+    );
+    txtp_time = TextEditingController(
+      text: "${home_model.p_time}",
+    );
+    txtp_date = TextEditingController(
+      text: "${home_model.p_date}",
+    );
+    txtp_notes = TextEditingController(
+      text: "${home_model.p_notes}",
+    );
+    txtp_warranty = TextEditingController(
+      text: "${home_model.p_warranty}",
+    );
+    txtp_paytypes = TextEditingController(
+      text: "${home_model.p_paytypes}",
+    );
+  }
+
+  void OldData() {
+    txtp_name = TextEditingController();
+    txtp_paytypes = TextEditingController();
+    txtp_warranty = TextEditingController();
+    txtp_notes = TextEditingController();
+    txtp_date = TextEditingController();
+    txtp_time = TextEditingController();
+    txtp_price = TextEditingController();
+
+    txtp_modelno = TextEditingController();
+    txtp_review = TextEditingController();
   }
 
   @override
@@ -236,21 +267,37 @@ class _Add_productState extends State<Add_product> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    args==0?
-                    FirebaseHelper.firebaseHelper.AddData(
-                      p_price: txtp_price.text,
-                      p_name: txtp_name.text,
-                      p_date: txtp_date.text,
-                      p_modelno: txtp_modelno.text,
-                      p_notes: txtp_notes.text,
-                      p_paytypes: txtp_paytypes.text,
-                      p_review: txtp_review.text,
-                      p_time: txtp_time.text,
-                      p_warranty: txtp_warranty.text,
-                    ):FirebaseHelper.firebaseHelper.UpadteData(String key);
+                    home_model.checkupdate == 0
+                        ? FirebaseHelper.firebaseHelper.AddData(
+                            p_price: txtp_price.text,
+                            p_name: txtp_name.text,
+                            p_date: txtp_date.text,
+                            p_modelno: txtp_modelno.text,
+                            p_notes: txtp_notes.text,
+                            p_paytypes: txtp_paytypes.text,
+                            p_review: txtp_review.text,
+                            p_time: txtp_time.text,
+                            p_warranty: txtp_warranty.text,
+                          )
+                        : FirebaseHelper.firebaseHelper.UpadteData(
+                            p_name: txtp_name.text,
+                            p_notes: txtp_notes.text,
+                            p_date: txtp_date.text,
+                            p_time: txtp_time.text,
+                            p_price: txtp_price.text,
+                            p_review: txtp_review.text,
+                            p_warranty: txtp_warranty.text,
+                            p_paytypes: txtp_paytypes.text,
+                            p_modelno: txtp_modelno.text,
+                            key: home_model.key,
+                          );
+                    ;
+                    // ):FirebaseHelper.firebaseHelper.UpadteData(String key);
                     Get.back();
                   },
-                  child: args == 0 ? Text("Add") : Text("Update"),
+                  child: home_model.checkupdate == 0
+                      ? Text("Add")
+                      : Text("Update"),
                 ),
               ],
             ),
