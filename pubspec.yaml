@@ -41,6 +41,7 @@ dependencies:
   firebase_core: ^2.13.0
   google_sign_in: ^6.1.2
   cloud_firestore: ^4.7.1
+  flutter_local_notifications: ^14.1.1
 
 
 dev_dependencies:

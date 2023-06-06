@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_base_login/screen/home_screen/controller/home_controller.dart';
 import 'package:fire_base_login/screen/home_screen/model/home_model.dart';
 import 'package:fire_base_login/utils/fire_base_helper.dart';
+import 'package:fire_base_login/utils/notification_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,6 +42,11 @@ class _Home_ScreenState extends State<Home_Screen> {
           ),
           centerTitle: true,
           actions: [
+            IconButton(
+                onPressed: () async {
+                  await NotificationHelper.Helper.showSimpleNotification();
+                },
+                icon: Icon(Icons.notifications)),
             IconButton(
               onPressed: () async {
                 await FirebaseHelper.firebaseHelper.signOut();

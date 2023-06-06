@@ -71,8 +71,11 @@ class _Add_productState extends State<Add_product> {
     txtp_paytypes = TextEditingController();
     txtp_warranty = TextEditingController();
     txtp_notes = TextEditingController();
-    txtp_date = TextEditingController();
-    txtp_time = TextEditingController();
+    txtp_date = TextEditingController(
+        text: "${TimeOfDay.now().hour}:${TimeOfDay.now().minute}");
+    txtp_time = TextEditingController(
+        text:
+            "${DateTime.now().day}/ ${DateTime.now().month}/ ${DateTime.now().year}");
     txtp_price = TextEditingController();
 
     txtp_modelno = TextEditingController();

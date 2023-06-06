@@ -171,12 +171,11 @@ class FirebaseHelper {
     User? user = firebaseAuth.currentUser;
     var uid = user!.uid;
 
-
-    await   firestore
+    await firestore
         .collection("Product")
         .doc("$uid")
         .collection("todo")
-        .doc(key).delete();
-
+        .doc(key)
+        .delete();
   }
 }
