@@ -48,6 +48,11 @@ class _Home_ScreenState extends State<Home_Screen> {
                 },
                 icon: Icon(Icons.notifications)),
             IconButton(
+                onPressed: () async {
+                  await NotificationHelper.Helper.ShowCustomNotification();
+                },
+                icon: Icon(Icons.music_note)),
+            IconButton(
               onPressed: () async {
                 await FirebaseHelper.firebaseHelper.signOut();
               },
