@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:http/http.dart' as http;
 
 class NotificationHelper {
   static NotificationHelper Helper = NotificationHelper._();
@@ -14,6 +16,7 @@ class NotificationHelper {
   NotificationDetails get notificationDetails => NotificationDetails();
 
   Future<void> init() async {
+    tz.TimeZone;
     AndroidInitializationSettings androidSettings =
         AndroidInitializationSettings('notification');
 
@@ -47,7 +50,7 @@ class NotificationHelper {
         1,
         "Flutter darshit",
         "5 sec",
-        tz.TZDateTime.now(tz.local).add(Duration(days: 2)),
+        tz.TZDateTime.now(tz.local).add(Duration(seconds: 2)),
         notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
@@ -56,7 +59,7 @@ class NotificationHelper {
   Future<void> ShowCustomNotification() async {
     AndroidNotificationDetails android = AndroidNotificationDetails(
         "1", "FLUTTER",
-        sound: RawResourceAndroidNotificationSound('music'),playSound: true);
+        sound: RawResourceAndroidNotificationSound('music'), playSound: true);
 
     DarwinNotificationDetails ioSDetails = DarwinNotificationDetails();
     NotificationDetails notificationDetails =
@@ -64,5 +67,41 @@ class NotificationHelper {
 
     await flutterLocalNotificationsPlugin.show(
         1, "Flutter Notification", "simple notification", notificationDetails);
+  }
+
+  Future<void> showBigPictureNotification() async {
+    String link =
+        "https://www.shutterstock.com/image-vector/blowing-kiss-women-600w-781700677.jpg";
+
+    String base64 = await uriToBase64(link);
+    BigPictureStyleInformation bigPicInfo = BigPictureStyleInformation(
+        ByteArrayAndroidBitmap.fromBase64String(base64));
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails("1", "ANDROID",
+            styleInformation: bigPicInfo);
+    DarwinNotificationDetails iosDetails = DarwinNotificationDetails();
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails, iOS: iosDetails);
+
+    await flutterLocalNotificationsPlugin.show(
+        1, "Darshit app", "Miss You", notificationDetails);
+  }
+
+  Future<String> uriToBase64(String link) async {
+    final http.Response response = await http.get(Uri.parse(link));
+    final String base64Data = base64Encode(response.bodyBytes);
+    return base64Data;
+  }
+
+  Future<void> showFireNotification(String title, String body) async {
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails("1", "ANDROID");
+
+    DarwinNotificationDetails iosDetails = DarwinNotificationDetails();
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails, iOS: iosDetails);
+
+    await flutterLocalNotificationsPlugin.show(
+        1, "$title", "$body", notificationDetails);
   }
 }

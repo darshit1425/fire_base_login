@@ -22,6 +22,7 @@ class _Home_ScreenState extends State<Home_Screen> {
   @override
   void initState() {
     super.initState();
+    FirebaseHelper.firebaseHelper.initFirebaseMessage();
 
     isLogin = FirebaseHelper.firebaseHelper.CheckUser();
   }
@@ -42,16 +43,37 @@ class _Home_ScreenState extends State<Home_Screen> {
           ),
           centerTitle: true,
           actions: [
-            IconButton(
-                onPressed: () async {
-                  await NotificationHelper.Helper.showSimpleNotification();
-                },
-                icon: Icon(Icons.notifications)),
-            IconButton(
-                onPressed: () async {
-                  await NotificationHelper.Helper.ShowCustomNotification();
-                },
-                icon: Icon(Icons.music_note)),
+            PopupMenuButton(
+              color: Colors.amber.shade500,
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                    child: IconButton(
+                        onPressed: () async {
+                          await NotificationHelper.Helper
+                              .showSimpleNotification();
+                        },
+                        icon: Icon(Icons.notifications))),
+                PopupMenuItem(
+                  child: IconButton(
+                      onPressed: () async {
+                        await NotificationHelper.Helper
+                            .ShowCustomNotification();
+                      },
+                      icon: Icon(Icons.music_note)),
+                ),
+                PopupMenuItem(
+                  child: IconButton(
+                    onPressed: () async {
+                      await NotificationHelper.Helper
+                          .showBigPictureNotification();
+                    },
+                    icon: Icon(
+                      Icons.image,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             IconButton(
               onPressed: () async {
                 await FirebaseHelper.firebaseHelper.signOut();

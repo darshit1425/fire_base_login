@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-   NotificationHelper.Helper.init();
+  NotificationHelper.Helper.init();
 
   runApp(
     GetMaterialApp(
