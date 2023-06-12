@@ -8,21 +8,22 @@ class Home_model {
       p_warranty,
       p_paytypes,
       p_modelno,
+      p_image,
       key;
 
   int? checkupdate;
 
-  Home_model({
-    this.p_name,
-    this.p_notes,
-    this.p_date,
-    this.p_time,
-    this.p_price,
-    this.p_review,
-    this.p_warranty,
-    this.p_paytypes,
-    this.key,
-    this.p_modelno,
-    this.checkupdate,
-  });
+  Home_model(
+      {this.p_name,
+      this.p_notes,
+      this.p_date,
+      this.p_time,
+      this.p_price,
+      this.p_review,
+      this.p_warranty,
+      this.p_paytypes,
+      this.key,
+      this.p_modelno,
+      this.checkupdate,
+      this.p_image});
 }

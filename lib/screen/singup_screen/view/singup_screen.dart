@@ -9,7 +9,6 @@ class SingUp_Screen extends StatefulWidget {
   State<SingUp_Screen> createState() => _SingUp_ScreenState();
 }
 
-
 class _SingUp_ScreenState extends State<SingUp_Screen> {
   @override
   TextEditingController txtemail = TextEditingController();
@@ -165,7 +164,7 @@ class _SingUp_ScreenState extends State<SingUp_Screen> {
                       await FirebaseHelper.firebaseHelper.signInWithGoogle();
 
                   if (msg == "Success") {
-                    Get.offAndToNamed("/Home");
+                    Get.offAllNamed("/Home");
                   }
                   // Get.snackbar(
                   //   "$msg",

@@ -84,38 +84,38 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
           ],
         ),
-        // drawer: Drawer(
-        //   child: Padding(
-        //     padding: EdgeInsets.all(10),
-        //     child: Column(
-        //       children: [
-        //         CircleAvatar(
-        //           radius: 30,
-        //           backgroundImage:
-        //               NetworkImage("${contoller.userDetail['image']}"),
-        //         ),
-        //         SizedBox(height: 10),
-        //         Text(
-        //           "${contoller.userDetail['name']}",
-        //           style: TextStyle(
-        //             fontWeight: FontWeight.bold,
-        //             fontSize: 16,
-        //             color: Colors.black,
-        //           ),
-        //         ),
-        //         SizedBox(height: 10),
-        //         Text(
-        //           "${contoller.userDetail['email']}",
-        //           style: TextStyle(
-        //             fontWeight: FontWeight.bold,
-        //             fontSize: 12,
-        //             color: Colors.black,
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+        drawer: Drawer(
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage:
+                      NetworkImage("${contoller.userDetail['image']}"),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "${contoller.userDetail['name']}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "${contoller.userDetail['email']}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         body: StreamBuilder(
           stream: FirebaseHelper.firebaseHelper.GetData(),
           builder: (context, snapshot) {
@@ -137,6 +137,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                 String? warranty = data['p_warranty'];
                 String? paytypes = data['p_paytypes'];
                 String? model = data['p_modelno'];
+                String? image = data['p_image'];
 
                 print(name);
 
@@ -151,6 +152,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                   p_price: price,
                   p_time: time,
                   key: x.id,
+                  p_image: image,
                 );
 
                 contoller.DataList.add(home_model);
@@ -159,12 +161,15 @@ class _Home_ScreenState extends State<Home_Screen> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
-                  mainAxisExtent: 230,
+                  mainAxisExtent: 350,
                 ),
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: GestureDetector(
+                      onTap: () {
+                        Get.toNamed("/detalis",arguments: contoller.DataList[index]);
+                      },
                       onLongPress: () {
                         // FirebaseHelper.firebaseHelper
                         // .UpadteData(Home_model[index].key);
@@ -180,6 +185,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                           p_review: contoller.DataList[index].p_review,
                           p_warranty: contoller.DataList[index].p_warranty,
                           p_name: contoller.DataList[index].p_name,
+                          p_image: contoller.DataList[index].p_image,
                           checkupdate: 1,
                         );
 
@@ -245,6 +251,23 @@ class _Home_ScreenState extends State<Home_Screen> {
                               style: TextStyle(color: Colors.white),
                             ),
                             SizedBox(
+                              height: 10,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Image",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Image.network(
+                                  "${contoller.DataList[index].p_image}",
+                                  fit: BoxFit.contain,
+                                  height: 120,
+                                  width: 120,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
                               height: 12,
                             ),
                           ],
@@ -256,11 +279,12 @@ class _Home_ScreenState extends State<Home_Screen> {
                 itemCount: contoller.DataList.length,
               );
             }
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           },
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
+          backgroundColor: Colors.black,
           onPressed: () {
             Home_model home_model = Home_model(
               checkupdate: 0,

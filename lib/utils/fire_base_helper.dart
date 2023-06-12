@@ -110,7 +110,8 @@ class FirebaseHelper {
       p_review,
       p_warranty,
       p_paytypes,
-      p_modelno}) async {
+      p_modelno,
+      p_image}) async {
     User? user = firebaseAuth.currentUser;
     String uid = user!.uid;
     await firestore.collection("Product").doc("$uid").collection("todo").add({
@@ -123,6 +124,7 @@ class FirebaseHelper {
       "p_warranty": p_warranty,
       "p_paytypes": p_paytypes,
       "p_modelno": p_modelno,
+      "p_image": p_image,
     });
   }
 
@@ -147,6 +149,7 @@ class FirebaseHelper {
     required p_warranty,
     required p_paytypes,
     required p_modelno,
+    required p_image,
     required key,
   }) {
     User? user = firebaseAuth.currentUser;
@@ -166,6 +169,7 @@ class FirebaseHelper {
       "p_warranty": p_warranty,
       "p_paytypes": p_paytypes,
       "p_modelno": p_modelno,
+      "p_image": p_image,
     });
   }
 

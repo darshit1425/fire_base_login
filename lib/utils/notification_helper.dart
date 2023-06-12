@@ -84,7 +84,7 @@ class NotificationHelper {
         android: androidNotificationDetails, iOS: iosDetails);
 
     await flutterLocalNotificationsPlugin.show(
-        1, "Darshit app", "Miss You", notificationDetails);
+        1, "Darshit app", "notification allowed", notificationDetails);
   }
 
   Future<String> uriToBase64(String link) async {

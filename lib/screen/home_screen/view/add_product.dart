@@ -25,6 +25,7 @@ class _Add_productState extends State<Add_product> {
   TextEditingController txtp_warranty = TextEditingController();
   TextEditingController txtp_paytypes = TextEditingController();
   TextEditingController txtp_modelno = TextEditingController();
+  TextEditingController txtp_image = TextEditingController();
 
   Home_model home_model = Get.arguments;
 
@@ -64,6 +65,9 @@ class _Add_productState extends State<Add_product> {
     txtp_paytypes = TextEditingController(
       text: "${home_model.p_paytypes}",
     );
+    txtp_image = TextEditingController(
+      text: "${home_model.p_image}",
+    );
   }
 
   void OldData() {
@@ -80,6 +84,7 @@ class _Add_productState extends State<Add_product> {
 
     txtp_modelno = TextEditingController();
     txtp_review = TextEditingController();
+    txtp_image = TextEditingController();
   }
 
   @override
@@ -258,6 +263,17 @@ class _Add_productState extends State<Add_product> {
                                   ),
                                 ),
                               ),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(
+                                  controller: txtp_image,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "p_image",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -281,6 +297,8 @@ class _Add_productState extends State<Add_product> {
                             p_review: txtp_review.text,
                             p_time: txtp_time.text,
                             p_warranty: txtp_warranty.text,
+                      p_image: txtp_image.text,
+
                           )
                         : FirebaseHelper.firebaseHelper.UpadteData(
                             p_name: txtp_name.text,
@@ -292,6 +310,7 @@ class _Add_productState extends State<Add_product> {
                             p_warranty: txtp_warranty.text,
                             p_paytypes: txtp_paytypes.text,
                             p_modelno: txtp_modelno.text,
+                            p_image: txtp_image.text,
                             key: home_model.key,
                           );
                     ;
