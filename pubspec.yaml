@@ -78,7 +78,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/
-#    - lib/views/category/category_model/category_model.json
+  #    - lib/views/category/category_model/category_model.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
