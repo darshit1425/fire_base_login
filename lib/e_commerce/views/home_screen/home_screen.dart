@@ -287,7 +287,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               );
                                             },
                                             child: Container(
-                                              margin: EdgeInsets.symmetric(horizontal: 4),
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 4),
                                               padding: const EdgeInsets.all(8),
                                               height: Get.height * 0.3,
                                               width: Get.width * 0.4,

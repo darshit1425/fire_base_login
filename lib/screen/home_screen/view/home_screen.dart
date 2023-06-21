@@ -161,7 +161,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
-                  mainAxisExtent: 350,
+                  mainAxisExtent: 400,
                 ),
                 itemBuilder: (context, index) {
                   return Padding(
@@ -231,8 +231,9 @@ class _Home_ScreenState extends State<Home_Screen> {
                               style: TextStyle(color: Colors.white),
                             ),
                             Text(
+                              overflow: TextOverflow.ellipsis,
                               "Notes :-${contoller.DataList[index].p_notes}",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white,),
                             ),
                             Text(
                               "Review :-${contoller.DataList[index].p_review}",

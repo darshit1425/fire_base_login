@@ -1,4 +1,3 @@
-
 import 'package:fire_base_login/e_commerce/consts/images.dart';
 import 'package:fire_base_login/e_commerce/consts/styles.dart';
 import 'package:fire_base_login/e_commerce/views/auth_screen/home/controller/home_controller.dart';

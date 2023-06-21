@@ -71,7 +71,7 @@ class NotificationHelper {
 
   Future<void> showBigPictureNotification() async {
     String link =
-        "https://www.shutterstock.com/image-vector/blowing-kiss-women-600w-781700677.jpg";
+        "https://media.zenfs.com/en/food_wine_804/bc1314d4d35b8340947d91e964dabecf";
 
     String base64 = await uriToBase64(link);
     BigPictureStyleInformation bigPicInfo = BigPictureStyleInformation(
